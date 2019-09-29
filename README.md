@@ -4,7 +4,15 @@ My scripts, parser and tools for working with the geonames free Gazetteer data s
 
 Data source http://download.geonames.org/export/dump/
 
-# Motivation
+## Features
+
+- Download country info list from geonames
+- Convert to `json` and `sql`
+- Select the necessary columns
+- Friendly syntax filtering
+- Easy sorting
+
+## Motivation
 
 Many projects need a list of countries. There is also a need for pre-filtering data, for example, to select only countries with a population of more than 10m or countries of Europe.
 
