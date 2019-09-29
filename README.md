@@ -14,4 +14,28 @@ The goal of this project is to create a number of scripts to generate such lists
 
 I hope someone will like it. I also hope someone writes recommendations and feature requests.
 
+## Examples
 
+Get a list of countries in json format
+
+```
+python countries.py --format json 
+```
+
+Select only columns `iso` and `country`
+
+```
+python countries.py --format json --columns iso country
+```
+
+Filter out countries with population over 125 000 000
+
+```
+python countries.py --format json --query 'population>=125000000' --columns iso country population
+```
+
+For help run
+
+```
+python countries.py -h
+```
