@@ -52,7 +52,7 @@ COLUMNS_TYPE = {
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Countries list downloader')
-    parser.add_argument('--format', default='json', help='Available formats `json`, `sql`')
+    parser.add_argument('--format', default='json', help='Available formats `json`, `sql` and `csv`')
     parser.add_argument('--table', default='countries', help='SQL table name')
     parser.add_argument('--query', help='Pandas query expression')
     parser.add_argument('--sort', help='Sort query, example population-,area')
@@ -88,6 +88,8 @@ if __name__ == '__main__':
 
         if args.format == 'json':
             print(df.to_json(orient='records'))
+        elif args.format == 'csv':
+            print(df.to_csv())
         elif args.format == 'sql':
             for row in df.iterrows():
                 print('INSERT INTO "%s" (' % (args.table,), end='')
