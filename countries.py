@@ -2,7 +2,6 @@ import io
 from argparse import ArgumentParser
 from urllib.request import urlopen
 
-from sqlalchemy import create_engine
 import numpy as np
 import pandas as pd
 
