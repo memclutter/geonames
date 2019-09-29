@@ -53,6 +53,7 @@ COLUMNS_TYPE = {
 if __name__ == '__main__':
     parser = ArgumentParser(description='Countries list downloader')
     parser.add_argument('--format', default='json', help='Available formats `json`, `sql`')
+    parser.add_argument('--table', default='countries', help='SQL table name')
     parser.add_argument('--query', help='Pandas query expression')
     parser.add_argument('--columns', nargs='+', help='Select columns for result')
 
@@ -62,7 +63,7 @@ if __name__ == '__main__':
         data = response.read().decode('utf-8')
 
         # Pass description, headers and first char '#'
-        csv_data = '\n'.join(data.split('\n')[51:])[1:]
+        csv_data = '\n'.join(data.split('\n')[51:])
 
         # Parse csv and write in DataFrame
         df = pd.read_csv(io.StringIO(csv_data), sep='\t', names=COLUMNS, dtype=COLUMNS_TYPE, header=None)
@@ -77,5 +78,20 @@ if __name__ == '__main__':
         if args.format == 'json':
             print(df.to_json(orient='records'))
         elif args.format == 'sql':
-            # TODO dump to sql file
-            pass
+            for row in df.iterrows():
+                print('INSERT INTO "%s" (' % (args.table,), end='')
+                for i, key in enumerate(row[1].keys()):
+                    print('"%s"' % key, end='')
+                    if i < len(row[1].keys())-1:
+                        print(', ', end='')
+
+                print(') VALUES (', end='')
+                for i, key in enumerate(row[1].keys()):
+                    if type(row[1][key]) == str:
+                        print("'%s'" % row[1][key], end='')
+                    else:
+                        print(row[1][key], end='')
+                    if i < len(row[1].keys())-1:
+                        print(', ', end='')
+
+                print(');')
