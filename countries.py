@@ -62,8 +62,8 @@ if __name__ == '__main__':
     with urlopen(DATA_SOURCE) as response:
         data = response.read().decode('utf-8')
 
-        # Pass description and first char '#'
-        csv_data = '\n'.join(data.split('\n')[51:53])[1:]
+        # Pass description, headers and first char '#'
+        csv_data = '\n'.join(data.split('\n')[51:])[1:]
 
         # Parse csv and write in DataFrame
         df = pd.read_csv(io.StringIO(csv_data), sep='\t', names=COLUMNS, dtype=COLUMNS_TYPE, header=None)
