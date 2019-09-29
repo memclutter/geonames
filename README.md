@@ -22,6 +22,12 @@ Get a list of countries in json format
 python countries.py --format json 
 ```
 
+Get a list of countries in sql format (inserts)
+
+```
+python countries.py --format sql --table countries
+```
+
 Select only columns `iso` and `country`
 
 ```
