@@ -40,6 +40,12 @@ Filter out countries with population over 125 000 000
 python countries.py --format json --query 'population>=125000000' --columns iso country population
 ```
 
+Sorting by population (DESC)
+
+```
+python countries.py --format json --sort 'population-' --columns iso country population
+```
+
 For help run
 
 ```

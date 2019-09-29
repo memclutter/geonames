@@ -55,6 +55,7 @@ if __name__ == '__main__':
     parser.add_argument('--format', default='json', help='Available formats `json`, `sql`')
     parser.add_argument('--table', default='countries', help='SQL table name')
     parser.add_argument('--query', help='Pandas query expression')
+    parser.add_argument('--sort', help='Sort query, example population-,area')
     parser.add_argument('--columns', nargs='+', help='Select columns for result')
 
     args = parser.parse_args()
@@ -68,8 +69,18 @@ if __name__ == '__main__':
         # Parse csv and write in DataFrame
         df = pd.read_csv(io.StringIO(csv_data), sep='\t', names=COLUMNS, dtype=COLUMNS_TYPE, header=None)
 
+        # Querying
         if args.query is not None:
             df = df.query(args.query)
+
+        # Sorting
+        if args.sort is not None:
+            columns = args.sort.split(',')
+            for column in columns:
+                if column[-1] == '-':
+                    df = df.sort_values(by=column[:-1], ascending=False)
+                else:
+                    df = df.sort_values(by=column, ascending=True)
 
         # Select columns
         if args.columns is not None and len(args.columns) > 0:
